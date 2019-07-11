@@ -1,0 +1,20 @@
+{
+  "applicationName": "tom_test",
+  "dbConf": {
+    "dbSource": "root:123456@tcp(127.0.0.1:3306)/invoicing?charset=utf8&parseTime=true",
+    "maxOpen": 30,
+    "maxIdle": 15
+  },
+  "logConf": {
+    "logPath": "D:\\log",
+    "logFileName": "tom_test",
+    "maxAge": 168,
+    "rotationTime": 24,
+    "logLevel":"debug"
+  },
+  "sqlTemplate": "E:\\goLandProjects\\tomweb\\sql\\*.tpl",
+  "staticSource": "E:\\goLandProjects\\tomweb\\web_static\\*",
+  "property": {
+    "test": 1
+  }
+}
