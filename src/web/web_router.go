@@ -43,20 +43,30 @@ func StartServer(baseConfig *BaseConfig, addr ...string) {
 
 //静态页面
 func staticHtml(router *gin.Engine) {
-	router.LoadHTMLGlob(config.StaticSource)
-	router.GET("/", func(context *gin.Context) {
-		context.HTML(http.StatusOK, "index.html", nil)
-	})
+	if config.StaticSource != "" {
+		router.LoadHTMLGlob(config.StaticSource)
+		router.GET("/", func(context *gin.Context) {
+			context.HTML(http.StatusOK, "index.html", nil)
+		})
+	}
 }
 
 //错误处理
 func errorHandler(router *gin.Engine) {
 	router.NoRoute(func(context *gin.Context) {
-		context.HTML(http.StatusBadRequest, "404.html", nil)
+		if Conf.StaticSource != "" {
+			context.HTML(http.StatusBadRequest, "404.html", nil)
+		} else {
+			context.JSON(http.StatusOK, FailMsgResponse("404 no route"))
+		}
 	})
 
 	router.NoMethod(func(context *gin.Context) {
-		context.HTML(http.StatusForbidden, "403.html", nil)
+		if Conf.StaticSource != "" {
+			context.HTML(http.StatusForbidden, "403.html", nil)
+		} else {
+			context.JSON(http.StatusOK, FailMsgResponse("405 no method"))
+		}
 	})
 }
 
