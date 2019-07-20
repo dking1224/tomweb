@@ -21,7 +21,9 @@ func StartServer(baseConfig *BaseConfig, addr ...string) {
 	//日志初始化
 	InitLog()
 	//sql文件处理
-	InitTemplate(Conf.SqlTemplate, baseConfig.SqlMethod)
+	if Conf.SqlTemplate != "" {
+		InitTemplate(Conf.SqlTemplate, baseConfig.SqlMethod)
+	}
 	DB = baseConfig.DBValue.CreateDB()
 	router := gin.Default()
 	//参数校验
