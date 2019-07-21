@@ -14,9 +14,32 @@ func TestStartServer(t *testing.T) {
 	baseConfig := &web.BaseConfig{
 		UrlHandler: &UrlHandlerTest{},
 		DBValue:    &MysqlDBValue{},
-		ConfigPath: "E:\\goLandProjects\\tomweb\\conf.json",
+		ConfigPath: "E:\\GoProjects\\tomweb\\conf.json",
 	}
+	fmt.Println(CheckError())
+	fmt.Println(BusinessError())
+	SelectError(CheckError())
+	SelectError(BusinessError())
 	web.StartServer(baseConfig, ":8088")
+}
+
+func CheckError() error {
+	return &web.CheckError{ErrorMsg: "msg"}
+}
+
+func BusinessError() error {
+	return &web.BusinessError{ErrorMsg: "business"}
+}
+
+func SelectError(err error) {
+	switch err.(type) {
+	case *web.CheckError:
+		fmt.Println("check")
+	case *web.BusinessError:
+		fmt.Println("business")
+	default:
+		fmt.Println("unknown error")
+	}
 }
 
 type UrlHandlerTest struct {
