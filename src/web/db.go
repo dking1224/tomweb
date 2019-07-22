@@ -107,7 +107,10 @@ func InitTemplate(path string, method SqlMethod) {
 		}
 	}
 	t.Funcs(funcMap)
-	t.ParseGlob(path)
+	_, err := t.ParseGlob(path)
+	if err != nil {
+		Log.Error(err)
+	}
 }
 
 //新增template自定义方法
